@@ -1,0 +1,40 @@
+﻿VEJLEDNING TIL OPGAVE 2
+-----------------------
+I denne opgave skal du få en AI til at
+reagere på spillerens tilstedeværelse.
+
+I scenen er opstillet en AI som patruljerer
+mellem to punkter, og en spiller som kan
+styres med WASD-tasterne. Du skal ændre i
+AIens kode (PatrolAndChase.cs), for at få
+den til at jage spilleren, så snart man
+bevæger sig for tæt på.
+
+Scriptet definerer - nederst i koden - en
+enum ved navn State, som bruges til at
+styre om karakteren skal patruljere eller
+jage spilleren.
+
+Derudover er der en Patrol-funktion, som
+bliver kaldt i Update-funktionen, hvis state
+er sat til State.Patrol. Din opgave er at
+udvide koden med:
+* En Chase-funktion, der definerer hvordan
+  karakteren skal opføre sig når den er i
+  chase-mode.
+* En else-if sætning i Update-funktionen, som
+  sørger for at kalde Chase-funktionen hvis
+  karakterens state er sat til State.Chase.
+* Overgange mellem de to states - dette kan
+  tilføjes inde i Patrol- og Chase-
+  funktionerne ved hjælp af if-sætninger, der
+  tjekker om der bør skiftes state.
+
+Krav til løsning:
+* Når spilleren er langt væk, skal AI-
+  karakteren patruljere mellem de to punkter.
+* Når spilleren kommer tæt på, skal AI-
+  karakteren forfølge spilleren.
+* Når AI-karakteren forfølger spilleren og
+  kommer langt væk fra sine to punkter, skal
+  den give op og gå tilbage til at patruljere.
