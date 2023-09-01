@@ -1,0 +1,26 @@
+VEJLEDNING TIL OPGAVE 1
+-----------------------
+I denne opgave skal du have en AI-karakter til
+at patruljere mellem to punkter. Karakteren og
+punkterne er allerede sat op til dig, og der er
+lavet et script - Patrol.cs - som du skal lave
+færdigt.
+
+Scriptet definerer tre variable:
+* controller
+  En CharacterController-komponent, som du kan
+  bruge til at bevæge karakteren.
+* point1
+  Det første punkts Transform-komponent. Bruges
+  til at finde ud af hvor karakteren skal gå hen.
+* point2
+  Det andet punkts Transform-komponent. Bruges
+  til at finde ud af hvor karakteren skal gå hen.
+
+Udvid Patrol.cs så karakteren patruljerer mellem de
+to punkter.
+
+Krav til løsning:
+* Karakteren skal bevæge sig frem og tilbage mellem
+  point1 og point2
+* Karakteren skal pege i den retning den bevæger sig.
