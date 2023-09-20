@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
 public class Patrol : MonoBehaviour
 {
-    [SerializeField] private Transform point1;
-    [SerializeField] private Transform point2;
+    [SerializeField] private Transform[] points;
+    [SerializeField] private float moveSpeed = 3;
+    [SerializeField] private float targetRadius = 0.1f;
+
+    private int indexOfTarget;
+    private Vector3 targetPoint;
 
     private CharacterController controller;
 
@@ -14,11 +18,38 @@ public class Patrol : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        indexOfTarget = -1;
+        NextTarget();
+        LookAtTarget();
     }
 
-    // Update is called once per frame
+    void NextTarget()
+    {
+        indexOfTarget = (indexOfTarget + 1) % points.Length;
+        targetPoint = points[indexOfTarget].position;
+        targetPoint.y = transform.position.y;
+    }
+
+    void LookAtTarget()
+    {
+        Vector3 lookAt = targetPoint;
+        lookAt.y = transform.position.y;
+
+        Vector3 lookDir = (lookAt - transform.position).normalized;
+        transform.forward = lookDir;
+    }
+
     void Update()
     {
-        
+        if ((transform.position - targetPoint).magnitude < targetRadius)
+        {
+            NextTarget();
+            LookAtTarget();
+        }
+
+        Vector3 velocity = targetPoint - transform.position;
+        velocity.Normalize();
+        velocity *= moveSpeed * Time.deltaTime;
+        controller.Move(velocity);
     }
 }

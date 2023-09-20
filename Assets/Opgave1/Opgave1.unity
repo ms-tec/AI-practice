@@ -234,8 +234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7dab9412282ef429e80381808653a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point1: {fileID: 0}
-  point2: {fileID: 0}
+  points:
+  - {fileID: 1712952227}
+  - {fileID: 1834317781}
+  moveSpeed: 3
+  targetRadius: 0.2
 --- !u!1 &1712952226
 GameObject:
   m_ObjectHideFlags: 0
