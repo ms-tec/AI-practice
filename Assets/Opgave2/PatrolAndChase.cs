@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class PatrolAndChase : MonoBehaviour
 {
-    [SerializeField] private Transform point1;
-    [SerializeField] private Transform point2;
+    [SerializeField] private Transform player;
 
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private Transform[] points;
+    [SerializeField] private float moveSpeed = 3;
+    [SerializeField] private float targetRadius = 0.1f;
+
+    private int indexOfTarget;
+    private Vector3 targetPoint;
 
     private State state = State.PatrolState;
     private CharacterController controller;
-
-    private Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        targetPosition = point1.position;
-        targetPosition.y = transform.position.y;
+        indexOfTarget = -1;
+        NextTarget();
+        LookAtTarget();
     }
 
     // Update is called once per frame
@@ -30,17 +33,34 @@ public class PatrolAndChase : MonoBehaviour
             Patrol();
         }
     }
+    void NextTarget()
+    {
+        indexOfTarget = (indexOfTarget + 1) % points.Length;
+        targetPoint = points[indexOfTarget].position;
+        targetPoint.y = transform.position.y;
+    }
+
+    void LookAtTarget()
+    {
+        Vector3 lookAt = targetPoint;
+        lookAt.y = transform.position.y;
+
+        Vector3 lookDir = (lookAt - transform.position).normalized;
+        transform.forward = lookDir;
+    }
 
     void Patrol()
     {
-        if ((targetPosition - transform.position).magnitude < moveSpeed * 0.1f)
+        if ((transform.position - targetPoint).magnitude < targetRadius)
         {
-            (point1, point2) = (point2, point1);
-            targetPosition = point1.position;
-            targetPosition.y = transform.position.y;
+            NextTarget();
+            LookAtTarget();
         }
-        transform.LookAt(targetPosition);
-        controller.Move(moveSpeed * Time.deltaTime * transform.forward);
+
+        Vector3 velocity = targetPoint - transform.position;
+        velocity.Normalize();
+        velocity *= moveSpeed * Time.deltaTime;
+        controller.Move(velocity);
     }
 
     enum State
