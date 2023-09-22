@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1905767577}
-  visionRange: 10
+  visionRange: 8
   visionConeAngle: 30
   stateIndicator: {fileID: 544803117}
 --- !u!1 &1111628525
